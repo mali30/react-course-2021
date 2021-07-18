@@ -19,13 +19,7 @@ class Counter extends Component {
         <span className={this.getBadgeClasses()}>{this.formatCount()}</span>
         {/* inline styles */}
         <button className="btn btn-secondary btn-sm">Increment</button>
-
-        <ul>
-          {this.state.tags.map((tag) => (
-            //   unique key for each item in list
-            <li key={tag}>{tag}</li>
-          ))}
-        </ul>
+        {this.renderTags()}
       </React.Fragment>
     );
   }
@@ -39,6 +33,21 @@ class Counter extends Component {
     let classes = "badge m-2 badge-";
     classes += this.state.count === 0 ? "warning" : "primary";
     return classes;
+  }
+
+  renderTags() {
+    if (this.state.tags.length === 0) {
+      return <p>No tags to display</p>;
+    } else {
+      return (
+        <ul>
+          {this.state.tags.map((tag) => (
+            //   unique key for each item in list
+            <li key={tag}>{tag}</li>
+          ))}
+        </ul>
+      );
+    }
   }
 }
 
