@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 class Counter extends Component {
-    /**
+  /**
      *  binding event handler to this for handleIncrementClick function
      *  constructor() {
          super();
@@ -9,7 +9,7 @@ class Counter extends Component {
      }
      * 
      */
-   
+
   // object that includes any data we need
   state = {
     count: 0,
@@ -28,8 +28,9 @@ class Counter extends Component {
         <span className={this.getBadgeClasses()}>{this.formatCount()}</span>
         {/* inline styles */}
         <button
-          onClick={this.handleIncrementClick}
-          className="btn btn-secondary btn-sm" >
+          onClick={this.handleIncrementClickArrow}
+          className="btn btn-secondary btn-sm"
+        >
           Increment
         </button>
         {this.renderTags()}
@@ -40,13 +41,17 @@ class Counter extends Component {
   /* note that we pass a reference above vs calling function
     we can also use arrow functions 
   */
-    handleIncrementClick() {
-        console.log("handle increment");
-    };
+  // handleIncrementClick() {
+  //     this.setState({
+  //         count: this.state.count + 1
+  //     })
+  // };
 
-    handleIncrementClickArrow = () => {
-        console.log('this', this);
-    }
+  handleIncrementClickArrow = () => {
+    this.setState({
+      count: this.state.count + 1,
+    });
+  };
 
   formatCount = () => {
     const { count } = this.state;
