@@ -27,8 +27,9 @@ class Counter extends Component {
         {/* style object */}
         <span className={this.getBadgeClasses()}>{this.formatCount()}</span>
         {/* inline styles */}
-        <button
-          onClick={this.handleIncrementClickArrow}
+            <button
+                // to pass event arguments use arrow function
+          onClick={() => this.handleIncrementClickArrow}
           className="btn btn-secondary btn-sm"
         >
           Increment
@@ -47,11 +48,17 @@ class Counter extends Component {
   //     })
   // };
 
-  handleIncrementClickArrow = () => {
+    handleIncrementClickArrow = (event) => {
+        console.log(event);
     this.setState({
       count: this.state.count + 1,
     });
   };
+    
+    // example of passing event arguments
+    doHandleIncrement = () => {
+        this.handleIncrementClickArrow({id : 1})
+    }
 
   formatCount = () => {
     const { count } = this.state;
