@@ -24,6 +24,7 @@ class Counter extends Component {
     console.log('props', this.props);
     return (
       <div>
+        {this.props.children}
         <img src={this.state.imageUrl} alt=""></img>
         {/* style object */}
         <span className={this.getBadgeClasses()}>{this.formatCount()}</span>
