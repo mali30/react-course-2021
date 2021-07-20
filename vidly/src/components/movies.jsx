@@ -13,14 +13,14 @@ class Movies extends Component {
     });
   };
 
-    render() {
-        const { length: count } = this.state.movies;
-        if (count === 0) {
-            return <h2>No movies in stock</h2>
-        }
+  render() {
+    const { length: count } = this.state.movies;
+    if (count === 0) {
+      return <h2>No movies in stock</h2>;
+    }
     return (
       <div>
-            <h2>Showing {count} movies in stock</h2>
+        <h2>Showing {count} movies in stock</h2>
         <table className="table">
           <thead>
             <tr>
@@ -44,7 +44,7 @@ class Movies extends Component {
                     type="button"
                     className="btn btn-danger"
                   >
-                    Danger
+                    Delete
                   </button>
                 </td>
               </tr>
