@@ -12,7 +12,7 @@ class Counter extends Component {
 
   // object that includes any data we need
   state = {
-    count: 0,
+    value: this.props.value,
     tags: ["tag1", "tag2", "tag3"],
   };
 
@@ -21,6 +21,7 @@ class Counter extends Component {
     fontWeight: "bold",
   };
   render() {
+    console.log('props', this.props);
     return (
       <div>
         <img src={this.state.imageUrl} alt=""></img>
@@ -50,7 +51,7 @@ class Counter extends Component {
 
   handleIncrementClickArrow = () => {
     this.setState({
-      count: this.state.count + 1,
+      value: this.state.value + 1,
     });
   };
 
@@ -60,8 +61,8 @@ class Counter extends Component {
   };
 
   formatCount = () => {
-    const { count } = this.state;
-    return count === 0 ? "Zero" : count;
+    const { value } = this.state;
+    return value === 0 ? "Zero" : value;
   };
 
   getBadgeClasses() {
