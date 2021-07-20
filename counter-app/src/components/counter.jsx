@@ -22,20 +22,20 @@ class Counter extends Component {
   };
   render() {
     return (
-      <React.Fragment>
+      <div>
         <img src={this.state.imageUrl} alt=""></img>
         {/* style object */}
         <span className={this.getBadgeClasses()}>{this.formatCount()}</span>
         {/* inline styles */}
-            <button
-                // to pass event arguments use arrow function
-          onClick={() => this.handleIncrementClickArrow}
-          className="btn btn-secondary btn-sm"
+        <button
+          // to pass event arguments use arrow function
+          onClick={() => this.handleIncrementClickArrow()}
+          className="btn btn-secondary btn-md"
         >
           Increment
         </button>
-        {this.renderTags()}
-      </React.Fragment>
+        {/* {this.renderTags()} */}
+      </div>
     );
   }
 
@@ -48,17 +48,16 @@ class Counter extends Component {
   //     })
   // };
 
-    handleIncrementClickArrow = (event) => {
-        console.log(event);
+  handleIncrementClickArrow = () => {
     this.setState({
       count: this.state.count + 1,
     });
   };
-    
-    // example of passing event arguments
-    doHandleIncrement = () => {
-        this.handleIncrementClickArrow({id : 1})
-    }
+
+  // example of passing event arguments
+  doHandleIncrement = () => {
+    this.handleIncrementClickArrow({ id: 1 });
+  };
 
   formatCount = () => {
     const { count } = this.state;
@@ -67,7 +66,7 @@ class Counter extends Component {
 
   getBadgeClasses() {
     let classes = "badge m-2 badge-";
-    classes += this.state.count === 0 ? "warning" : "primary";
+    classes += this.state.count === 0 ? "warning btn-md" : "primary btn-md";
     return classes;
   }
 
