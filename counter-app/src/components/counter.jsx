@@ -12,7 +12,7 @@ class Counter extends Component {
 
   // object that includes any data we need
   state = {
-    value: this.props.value,
+    value: this.props.counter.value,
     tags: ["tag1", "tag2", "tag3"],
   };
 
@@ -36,6 +36,12 @@ class Counter extends Component {
         >
           Increment
         </button>
+
+        {/* 
+        Since the state of the counters is in the parent component (counter) we are raising 
+        that event to it. We then pass a reference from the parent to this component and handle it here
+         */}
+        <button onClick={() => this.props.onDelete(this.props.counter.value)} className="btn btn-danger btn-sm m-2"> Delete </button>
         {/* {this.renderTags()} */}
       </div>
     );
