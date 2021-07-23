@@ -9,14 +9,28 @@ class Counters extends Component {
       { id: 3, value: 3 },
     ],
   };
+
+  handleDelete = (counterId) => {
+    const counters = this.state.counter.filter(
+      (idToFilterOn) => counterId !== idToFilterOn.value
+    );
+    this.setState({
+      counter: counters,
+    });
+    console.log("counterId", counterId);
+  };
   render() {
     return (
       <div>
         {this.state.counter.map((counter) => (
-            <Counter key={counter.id} value={counter.value} >
-                {/* passing a child element into our component */}
-                <h3> The id of each counter {counter.id}</h3>
-                </Counter>
+          <Counter
+            key={counter.id}
+            counter={counter}
+            onDelete={this.handleDelete}
+          >
+            {/* passing a child element into our component */}
+            {/* <h3> The id of each counter {counter.id}</h3> */}
+          </Counter>
         ))}
       </div>
     );
