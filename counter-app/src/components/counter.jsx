@@ -2,26 +2,24 @@ import React, { Component } from "react";
 
 class Counter extends Component {
   render() {
-    const { onIncrement, onDelete } = this.props;
+    const { onIncrement, onDelete, onDecrement} = this.props;
     return (
-      <div>
-        {/* style object */}
-        <span className={this.getBadgeClasses()}>{this.formatCount()}</span>
-        {/* inline styles */}
-        <button
-          // to pass event arguments use arrow function
-          onClick={() => onIncrement(this.props.counter)}
-          className="btn btn-secondary btn-md"
-        >
-          Increment
-        </button>
+        <div className="row">
 
-        {/* 
-        Since the state of the counters is in the parent component (counter) we are raising 
-        that event to it. We then pass a reference from the parent to this component and handle it here
-         */}
-        <button onClick={() => onDelete(this.props.counter.id)} className="btn btn-danger btn-sm m-2"> Delete </button>
-        {/* {this.renderTags()} */}
+          <div className="col-1">
+          <span className={this.getBadgeClasses()}>{this.formatCount()}</span>
+        </div>
+        
+        <div className="col">
+            <button onClick={() => onIncrement(this.props.counter)}
+              className="btn btn-secondary btn-md"> + </button>
+
+            <button
+              disabled={this.props.counter.value === 0 ? "btn btn-disabled disabled" : ""}
+              onClick={() => onDecrement(this.props.counter)} className="btn btn-secondary btn-md m-2"> - </button>
+      
+            <button onClick={() => onDelete(this.props.counter.id)}  className="btn btn-danger btn-md">X</button>
+          </div>     
       </div>
     );
   }
@@ -54,6 +52,13 @@ class Counter extends Component {
           ))}
         </ul>
       );
+    }
+  }
+
+  isDisableButton = (counter) => {
+    // console.log(counter.value)
+    if (counter.value === 0) {
+      return "btn btn-disabled disabled"
     }
   }
 }
