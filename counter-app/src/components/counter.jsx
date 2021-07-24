@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 class Counter extends Component {
   render() {
+    const { onIncrement, onDelete } = this.props;
     return (
       <div>
         {/* style object */}
@@ -9,7 +10,7 @@ class Counter extends Component {
         {/* inline styles */}
         <button
           // to pass event arguments use arrow function
-          onClick={() => this.props.onIncrement(this.props.counter)}
+          onClick={() => onIncrement(this.props.counter)}
           className="btn btn-secondary btn-md"
         >
           Increment
@@ -19,7 +20,7 @@ class Counter extends Component {
         Since the state of the counters is in the parent component (counter) we are raising 
         that event to it. We then pass a reference from the parent to this component and handle it here
          */}
-        <button onClick={() => this.props.onDelete(this.props.counter.id)} className="btn btn-danger btn-sm m-2"> Delete </button>
+        <button onClick={() => onDelete(this.props.counter.id)} className="btn btn-danger btn-sm m-2"> Delete </button>
         {/* {this.renderTags()} */}
       </div>
     );
