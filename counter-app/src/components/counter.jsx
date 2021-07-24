@@ -1,37 +1,15 @@
 import React, { Component } from "react";
 
 class Counter extends Component {
-  /**
-     *  binding event handler to this for handleIncrementClick function
-     *  constructor() {
-         super();
-         this.handleIncrementClick = this.handleIncrementClick.bind(this);
-     }
-     * 
-     */
-
-  // object that includes any data we need
-  state = {
-    value: this.props.counter.value,
-    tags: ["tag1", "tag2", "tag3"],
-  };
-
-  styles = {
-    fontSize: 40,
-    fontWeight: "bold",
-  };
   render() {
-    console.log('props', this.props);
     return (
       <div>
-        {this.props.children}
-        <img src={this.state.imageUrl} alt=""></img>
         {/* style object */}
         <span className={this.getBadgeClasses()}>{this.formatCount()}</span>
         {/* inline styles */}
         <button
           // to pass event arguments use arrow function
-          onClick={() => this.handleIncrementClickArrow()}
+          onClick={() => this.props.onIncrement(this.props.counter)}
           className="btn btn-secondary btn-md"
         >
           Increment
@@ -41,26 +19,11 @@ class Counter extends Component {
         Since the state of the counters is in the parent component (counter) we are raising 
         that event to it. We then pass a reference from the parent to this component and handle it here
          */}
-        <button onClick={() => this.props.onDelete(this.props.counter.value)} className="btn btn-danger btn-sm m-2"> Delete </button>
+        <button onClick={() => this.props.onDelete(this.props.counter.id)} className="btn btn-danger btn-sm m-2"> Delete </button>
         {/* {this.renderTags()} */}
       </div>
     );
   }
-
-  /* note that we pass a reference above vs calling function
-    we can also use arrow functions 
-  */
-  // handleIncrementClick() {
-  //     this.setState({
-  //         count: this.state.count + 1
-  //     })
-  // };
-
-  handleIncrementClickArrow = () => {
-    this.setState({
-      value: this.state.value + 1,
-    });
-  };
 
   // example of passing event arguments
   doHandleIncrement = () => {
@@ -68,13 +31,13 @@ class Counter extends Component {
   };
 
   formatCount = () => {
-    const { value } = this.state;
+    const { value } = this.props.counter;
     return value === 0 ? "Zero" : value;
   };
 
   getBadgeClasses() {
     let classes = "badge m-2 badge-";
-    classes += this.state.count === 0 ? "warning btn-md" : "primary btn-md";
+    classes += this.props.counter.value === 0 ? "warning btn-md" : "primary btn-md";
     return classes;
   }
 
