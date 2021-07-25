@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import { getMovies } from "../services/fakeMovieService";
 import Like from "./common/like";
 import Pagination from "../components/common/pagination";
+import { paginate } from "../utils/paginate";
 
 class Movies extends Component {
   state = {
     movies: getMovies(),
     pageSize: 4,
-    currentPage: 1
+    currentPage: 1,
   };
 
   deleteMovie = (movie) => {
@@ -17,7 +18,7 @@ class Movies extends Component {
     });
   };
 
-  changeColorOnClick = (movie) => {
+  changeLikeOnClick = (movie) => {
     const movies = [...this.state.movies];
     const index = movies.indexOf(movie);
     movies[index] = { ...movies[index] };
@@ -29,16 +30,19 @@ class Movies extends Component {
 
   handlePageChange = (page) => {
     this.setState({
-      currentPage: page
-    })
+      currentPage: page,
+    });
   };
 
   render() {
     const { length: count } = this.state.movies;
-    const { pageSize, currentPage } = this.state;
+    const { pageSize, currentPage, movies: allMovies } = this.state;
     if (count === 0) {
       return <h2>No movies in stock</h2>;
     }
+
+    const movies = paginate(allMovies, currentPage, pageSize);
+    
     return (
       <div>
         <h2>Showing {count} movies in stock</h2>
@@ -52,7 +56,7 @@ class Movies extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.movies.map((movie) => (
+            {movies.map((movie) => (
               <tr key={movie._id}>
                 <td>{movie.title}</td>
                 <td>{movie.genre.name}</td>
@@ -60,7 +64,7 @@ class Movies extends Component {
                 <td>{movie.dailyRentalRate}</td>
                 <td>
                   <Like
-                    onClick={() => this.changeColorOnClick(movie)}
+                    onClick={() => this.changeLikeOnClick(movie)}
                     liked={movie.liked}
                   />
                 </td>
