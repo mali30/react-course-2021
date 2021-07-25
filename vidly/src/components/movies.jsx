@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { getMovies } from "../services/fakeMovieService";
-import Like from './common/like'
+import Like from "./common/like";
+import Pagination from "../components/common/pagination";
 
 class Movies extends Component {
   state = {
     movies: getMovies(),
+    pageSize: 4,
   };
 
   deleteMovie = (movie) => {
@@ -14,15 +16,18 @@ class Movies extends Component {
     });
   };
 
-
   changeColorOnClick = (movie) => {
     const movies = [...this.state.movies];
     const index = movies.indexOf(movie);
-    movies[index] = { ...movies[index] }
+    movies[index] = { ...movies[index] };
     movies[index].liked = !movies[index].liked;
     this.setState({
-      movies
-    })
+      movies,
+    });
+  };
+
+  handlePageChange = (page) => {
+    console.log(page);
   };
 
   render() {
@@ -50,8 +55,11 @@ class Movies extends Component {
                 <td>{movie.numberInStock}</td>
                 <td>{movie.dailyRentalRate}</td>
                 <td>
-                    <Like onClick={() => this.changeColorOnClick(movie)} liked={movie.liked} />
-                  </td>
+                  <Like
+                    onClick={() => this.changeColorOnClick(movie)}
+                    liked={movie.liked}
+                  />
+                </td>
                 <td>
                   <button
                     onClick={() => this.deleteMovie(movie)}
@@ -65,6 +73,12 @@ class Movies extends Component {
             ))}
           </tbody>
         </table>
+
+        <Pagination
+          itemCount={this.state.movies.length}
+          pageSize={this.state.pageSize}
+          onPageChange={this.handlePageChange}
+        />
       </div>
     );
   }
