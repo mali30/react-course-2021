@@ -16,9 +16,10 @@ class Movies extends Component {
 
   // this is when you fetch data from your backend
   componentDidMount() {
+    const genres = [{ name: "All Genres" }, ...getGenres()];
     this.setState({
       movies: getMovies(),
-      genres: getGenres(),
+      genres: genres,
     });
   }
 
@@ -47,7 +48,10 @@ class Movies extends Component {
 
   handleGenreSelect = (genre) => {
     this.setState({
-      selectedGenre: genre,
+      // bug when looking you select all genres and then click on another page, no movies display
+      // to fix this set currentPage to 1 since we limit the number of movies we display per page and we are trying
+      // to look at a page with no movies
+      selectedGenre: genre, currentPage: 1
     });
   };
 
@@ -63,9 +67,10 @@ class Movies extends Component {
       return <h2>No movies in stock</h2>;
     }
 
-    const filteredMovies = selectedGenre
-      ? allMovies.filter((m) => m.genre._id === selectedGenre._id)
-      : allMovies;
+    const filteredMovies =
+      selectedGenre && selectedGenre._id
+        ? allMovies.filter((m) => m.genre._id === selectedGenre._id)
+        : allMovies;
     const movies = paginate(filteredMovies, currentPage, pageSize);
 
     return (
