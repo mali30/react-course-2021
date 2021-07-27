@@ -3,13 +3,24 @@ import { getMovies } from "../services/fakeMovieService";
 import Like from "./common/like";
 import Pagination from "../components/common/pagination";
 import { paginate } from "../utils/paginate";
+import ListGroup from '../components/listGroup'
+import { getGenres } from '../services/fakeGenreService';
 
 class Movies extends Component {
   state = {
-    movies: getMovies(),
+    movies: [],
     pageSize: 4,
     currentPage: 1,
+    genres: []
   };
+
+  // this is when you fetch data from your backend
+  componentDidMount() {
+    this.setState({
+      movies: getMovies(),
+      genres: getGenres()
+    })
+  }
 
   deleteMovie = (movie) => {
     const updatedMovies = this.state.movies.filter((m) => m._id !== movie._id);
@@ -34,6 +45,11 @@ class Movies extends Component {
     });
   };
 
+  handleGenreSelect = (genre) => {
+    console.log('genre', genre);
+
+  }
+
   render() {
     const { length: count } = this.state.movies;
     const { pageSize, currentPage, movies: allMovies } = this.state;
@@ -42,9 +58,16 @@ class Movies extends Component {
     }
 
     const movies = paginate(allMovies, currentPage, pageSize);
-    
+
+    // const genreMovies = this.handleMovieGenre(movies);
+
     return (
-      <div>
+      <div className="row">
+        <div className="col-3">
+          <ListGroup items={this.state.genres} onItemSelect={this.handleGenreSelect}
+        textProperty = "name" valueProperty="_id"  />
+        </div>
+        <div className="col">
         <h2>Showing {count} movies in stock</h2>
         <table className="table">
           <thead>
@@ -88,6 +111,10 @@ class Movies extends Component {
           onPageChange={this.handlePageChange}
           currentPage={currentPage}
         />
+        </div>
+
+
+     
       </div>
     );
   }
