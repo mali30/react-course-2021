@@ -15,4 +15,10 @@ const ListGroup = (props) => {
   );
 };
 
+// adding default props so we can clean up current props 
+ListGroup.defaultProps = {
+    textProperty: 'name',
+    valueProperty: '_id'
+}
+
 export default ListGroup;
