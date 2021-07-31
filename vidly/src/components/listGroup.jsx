@@ -1,6 +1,4 @@
 import React from "react";
-import { getGenres } from "../services/fakeGenreService";
-import { func } from "prop-types";
 
 const ListGroup = (props) => {
   const {
