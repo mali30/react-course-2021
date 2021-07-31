@@ -4,7 +4,7 @@ import Pagination from "../components/common/pagination";
 import { paginate } from "../utils/paginate";
 import ListGroup from "../components/listGroup";
 import { getGenres } from "../services/fakeGenreService";
-import MoviesTable from '../components/moviesTable';
+import MoviesTable from "../components/moviesTable";
 
 class Movies extends Component {
   state = {
@@ -16,7 +16,7 @@ class Movies extends Component {
 
   // this is when you fetch data from your backend
   componentDidMount() {
-    const genres = [{ name: "All Genres" }, ...getGenres()];
+    const genres = [{ _id: "", name: "All Genres" }, ...getGenres()];
     this.setState({
       movies: getMovies(),
       genres: genres,
@@ -51,8 +51,13 @@ class Movies extends Component {
       // bug when looking you select all genres and then click on another page, no movies display
       // to fix this set currentPage to 1 since we limit the number of movies we display per page and we are trying
       // to look at a page with no movies
-      selectedGenre: genre, currentPage: 1
+      selectedGenre: genre,
+      currentPage: 1,
     });
+  };
+
+  handleSort = (pathToTargetProperty) => {
+    console.log(pathToTargetProperty);
   };
 
   render() {
@@ -84,7 +89,12 @@ class Movies extends Component {
         </div>
         <div className="col">
           <h2>Showing {filteredMovies.length} movies in stock</h2>
-          <MoviesTable movies={movies} onLike={this.onLike} onDelete={this.onDelete}/>
+          <MoviesTable
+            movies={movies}
+            onLike={this.onLike}
+            onDelete={this.onDelete}
+            onSort={this.handleSort}
+          />
           <Pagination
             itemCount={filteredMovies.length}
             pageSize={pageSize}
