@@ -25,13 +25,13 @@ const MoviesTable = (props) => {
             <td>{movie.dailyRentalRate}</td>
             <td>
               <Like
-                onClick={() => this.onLike(movie)}
+                onClick={() => onLike(movie)}
                 liked={movie.liked}
               />
             </td>
             <td>
               <button
-                onClick={() => this.onDelete(movie)}
+                onClick={() => onDelete(movie)}
                 type="button"
                 className="btn btn-danger"
               >
