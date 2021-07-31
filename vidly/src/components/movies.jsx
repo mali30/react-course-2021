@@ -5,6 +5,7 @@ import { paginate } from "../utils/paginate";
 import ListGroup from "../components/listGroup";
 import { getGenres } from "../services/fakeGenreService";
 import MoviesTable from "../components/moviesTable";
+import _ from "lodash";
 
 class Movies extends Component {
   state = {
@@ -12,6 +13,11 @@ class Movies extends Component {
     pageSize: 4,
     currentPage: 1,
     genres: [],
+    selectedGenre: "",
+    sortColumn: {
+      path: "title",
+      order: "asc",
+    },
   };
 
   // this is when you fetch data from your backend
@@ -56,8 +62,22 @@ class Movies extends Component {
     });
   };
 
+  /**
+   * todo: the sorting is not working. When I click on the column, it does not sort
+   * asc or desc
+   */
   handleSort = (pathToTargetProperty) => {
-    console.log(pathToTargetProperty);
+    const sortColumnClone = { ...this.state.sortColumn };
+    if (sortColumnClone.path === pathToTargetProperty) {
+      sortColumnClone.order = sortColumnClone.order === "asc" ? "desc" : "asc";
+    } else {
+      sortColumnClone.path = pathToTargetProperty;
+      sortColumnClone.order = "asc";
+    }
+
+    this.setState({
+      sortColumnClone,
+    });
   };
 
   render() {
@@ -67,24 +87,35 @@ class Movies extends Component {
       currentPage,
       movies: allMovies,
       selectedGenre,
+      sortColumn,
+      genres,
     } = this.state;
     if (count === 0) {
       return <h2>No movies in stock</h2>;
     }
 
+    // filter, sort, paginate
     const filteredMovies =
       selectedGenre && selectedGenre._id
         ? allMovies.filter((m) => m.genre._id === selectedGenre._id)
         : allMovies;
-    const movies = paginate(filteredMovies, currentPage, pageSize);
+
+    // sorting by the column clicked and in asc order
+    const sortedArray = _.orderBy(
+      filteredMovies,
+      [sortColumn.path],
+      [sortColumn.order]
+    );
+
+    const movies = paginate(sortedArray, currentPage, pageSize);
 
     return (
       <div className="row">
         <div className="col-3">
           <ListGroup
-            items={this.state.genres}
+            items={genres}
             onItemSelect={this.handleGenreSelect}
-            selectedItem={this.state.selectedGenre}
+            selectedItem={selectedGenre}
           />
         </div>
         <div className="col">
