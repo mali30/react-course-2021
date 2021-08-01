@@ -62,14 +62,7 @@ class Movies extends Component {
     });
   };
 
-  handleSort = (pathToTargetProperty) => {
-    const sortColumn = { ...this.state.sortColumn };
-    if (sortColumn.path === pathToTargetProperty) {
-      sortColumn.order = sortColumn.order === "asc" ? "desc" : "asc";
-    } else {
-      sortColumn.path = pathToTargetProperty;
-      sortColumn.order = "asc";
-    }
+  handleSort = (sortColumn) => {
     this.setState({
       sortColumn,
     });
@@ -120,6 +113,7 @@ class Movies extends Component {
             onLike={this.onLike}
             onDelete={this.onDelete}
             onSort={this.handleSort}
+            sortColumn={sortColumn}
           />
           <Pagination
             itemCount={filteredMovies.length}
