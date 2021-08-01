@@ -62,21 +62,16 @@ class Movies extends Component {
     });
   };
 
-  /**
-   * todo: the sorting is not working. When I click on the column, it does not sort
-   * asc or desc
-   */
   handleSort = (pathToTargetProperty) => {
-    const sortColumnClone = { ...this.state.sortColumn };
-    if (sortColumnClone.path === pathToTargetProperty) {
-      sortColumnClone.order = sortColumnClone.order === "asc" ? "desc" : "asc";
+    const sortColumn = { ...this.state.sortColumn };
+    if (sortColumn.path === pathToTargetProperty) {
+      sortColumn.order = sortColumn.order === "asc" ? "desc" : "asc";
     } else {
-      sortColumnClone.path = pathToTargetProperty;
-      sortColumnClone.order = "asc";
+      sortColumn.path = pathToTargetProperty;
+      sortColumn.order = "asc";
     }
-
     this.setState({
-      sortColumnClone,
+      sortColumn,
     });
   };
 
