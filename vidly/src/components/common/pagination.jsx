@@ -4,14 +4,11 @@ import PropTypes from 'prop-types';
 
 const Pagination = (props) => {
   const { itemCount, pageSize, currentPage, onPageChange } = props;
+  
     const pageCount = Math.ceil(itemCount / pageSize);
-    console.log('pagecount', pageCount)
   // edge case for when the pageSize is equal to number of movies, we don't display pagination
   if (pageCount === 1) return null;
     const pages = _.range(1, pageCount + 1);
-    console.log('pages', pages)
-    
-    console.log(currentPage);
 
     return (
     <nav>
