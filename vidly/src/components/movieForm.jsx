@@ -1,10 +1,20 @@
 import React, { Component } from "react";
 
-class MovieForm extends Component {
-  state = {};
-  render() {
-    return <h1>MovieForm</h1>;
-  }
-}
+// match object contains the id from the url
+// history object contains browser history
+const MovieForm = ({ match, history }) => {
+  return (
+    <div>
+      <h1>Movie Form {match.params.id}</h1>
+      <button
+        className="btn btn-primary"
+        onClick={() => history.push("/movies")}
+      >
+        {" "}
+        Save{" "}
+      </button>
+    </div>
+  );
+};
 
 export default MovieForm;
