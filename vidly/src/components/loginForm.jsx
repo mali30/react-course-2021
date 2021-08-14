@@ -3,8 +3,8 @@ import React, { Component } from "react";
 class LogInForm extends Component {
   state = {
     account: {
-      userName: "",
-      passWord: "",
+      username: "",
+      password: "",
     },
   };
 
@@ -17,13 +17,15 @@ class LogInForm extends Component {
     };
 
     const handleChange = (event) => {
+      const { currentTarget: input } = event;
       const account = { ...this.state.account };
-      account.userName = event.currentTarget.value;
+      account[input.name] = event.currentTarget.value;
       this.setState({
         account,
       });
     };
 
+    const { account } = this.state;
     return (
       <div>
         <h1>Login</h1>
@@ -32,17 +34,25 @@ class LogInForm extends Component {
             <label htmlFor="username">UserName</label>
             {/* values comes from state */}
             <input
-              value={this.state.account.userName}
+              value={account.username}
               onChange={handleChange}
               autoFocus
               id="username"
+              name="username"
               type="text"
               className="form-control"
             />
           </div>
           <div className="form-group">
             <label htmlFor="password">Password</label>
-            <input id="password" type="text" className="form-control" />
+            <input
+              name="password"
+              id="password"
+              type="text"
+              value={account.password}
+              onChange={handleChange}
+              className="form-control"
+            />
           </div>
           <button className="btn btn-primary">Log In</button>
         </form>
