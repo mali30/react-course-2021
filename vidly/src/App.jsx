@@ -8,6 +8,7 @@ import Rentals from "./components/rentals";
 import Navbar from "../src/components/common/navbar";
 import "./App.css";
 import MovieForm from "./components/movieForm";
+import LogInForm from "./components/loginForm";
 
 class App extends Component {
   render() {
@@ -16,6 +17,7 @@ class App extends Component {
         <Navbar />
         <main className="container">
           <Switch>
+            <Route path="/login" component={LogInForm} />
             <Route path="/movies/:id" component={MovieForm} />
             <Route path="/movies" component={Movies}></Route>
             <Route path="/customers" component={Customers}></Route>
