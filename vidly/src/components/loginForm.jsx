@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Input from "./common/input";
 
 class LogInForm extends Component {
   state = {
@@ -30,30 +31,19 @@ class LogInForm extends Component {
       <div>
         <h1>Login</h1>
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="username">UserName</label>
-            {/* values comes from state */}
-            <input
-              value={account.username}
-              onChange={handleChange}
-              autoFocus
-              id="username"
-              name="username"
-              type="text"
-              className="form-control"
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              name="password"
-              id="password"
-              type="text"
-              value={account.password}
-              onChange={handleChange}
-              className="form-control"
-            />
-          </div>
+          <Input
+            name="username"
+            value={account.username}
+            label="Username"
+            onChange={handleChange}
+          />
+
+          <Input
+            name="password"
+            value={account.password}
+            label="Password"
+            onChange={handleChange}
+          />
           <button className="btn btn-primary">Log In</button>
         </form>
       </div>
