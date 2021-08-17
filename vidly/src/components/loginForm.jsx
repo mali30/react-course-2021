@@ -7,12 +7,32 @@ class LogInForm extends Component {
       username: "",
       password: "",
     },
+    errors: {},
+  };
+
+  validate = () => {
+    const errors = {};
+    const { account } = this.state;
+    if (account.username.trim() === "") {
+      errors.username = "Username is required";
+    } else if (account.password.trim() === "") {
+      errors.password = "Password is required";
+    }
+
+    return Object.keys(errors).length === 0 ? null : errors;
   };
 
   render() {
     const handleSubmit = (event) => {
       // prevents default behavrior
       event.preventDefault();
+
+      const errors = this.validate();
+      console.log(errors);
+      this.setState({
+        errors: errors,
+      });
+      if (errors) return;
 
       console.log("Submited");
     };
