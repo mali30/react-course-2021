@@ -7,7 +7,7 @@ class LogInForm extends Component {
       username: "",
       password: "",
     },
-    errors: {},
+    errors: { username: "", password: "" },
   };
 
   validate = () => {
@@ -15,7 +15,8 @@ class LogInForm extends Component {
     const { account } = this.state;
     if (account.username.trim() === "") {
       errors.username = "Username is required";
-    } else if (account.password.trim() === "") {
+    }
+    if (account.password.trim() === "") {
       errors.password = "Password is required";
     }
 
@@ -28,13 +29,10 @@ class LogInForm extends Component {
       event.preventDefault();
 
       const errors = this.validate();
-      console.log(errors);
       this.setState({
-        errors: errors,
+          errors: errors || {},
       });
       if (errors) return;
-
-      console.log("Submited");
     };
 
     const handleChange = (event) => {
@@ -46,7 +44,7 @@ class LogInForm extends Component {
       });
     };
 
-    const { account } = this.state;
+    const { account, errors } = this.state;
     return (
       <div>
         <h1>Login</h1>
@@ -56,6 +54,7 @@ class LogInForm extends Component {
             value={account.username}
             label="Username"
             onChange={handleChange}
+            error={errors.username}
           />
 
           <Input
@@ -63,6 +62,7 @@ class LogInForm extends Component {
             value={account.password}
             label="Password"
             onChange={handleChange}
+            error={errors.password}
           />
           <button className="btn btn-primary">Log In</button>
         </form>
