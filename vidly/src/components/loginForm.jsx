@@ -30,17 +30,32 @@ class LogInForm extends Component {
 
       const errors = this.validate();
       this.setState({
-          errors: errors || {},
+        errors: errors || {},
       });
       if (errors) return;
     };
 
-    const handleChange = (event) => {
-      const { currentTarget: input } = event;
+    const validateProperty = ({ name, value }) => {
+      if (name === "username") {
+        if (value.trim() === "") return "Username is required";
+      }
+
+      if (name === "password") {
+        if (value.trim() === "") return "Password is required";
+      }
+    };
+
+    const handleChange = ({ currentTarget: input }) => {
+      const errors = { ...this.state.errors };
+      const errorMessage = validateProperty(input);
+      if (errorMessage) errors[input.name] = errorMessage;
+      else delete errors[input.name];
+
       const account = { ...this.state.account };
-      account[input.name] = event.currentTarget.value;
+      account[input.name] = input.value;
       this.setState({
         account,
+        errors,
       });
     };
 
