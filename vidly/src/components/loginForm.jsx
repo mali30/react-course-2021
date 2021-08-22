@@ -16,22 +16,24 @@ class LogInForm extends Component {
     password: Joi.string().required().label("Password"),
   };
 
-  validate = () => {
-    const options = { abortEarly: false };
-    const { error } = Joi.validate(this.state.account, this.schema, options);
-
-    if (!error) return null;
-    const errors = {};
-    for (let item of error.details) errors[item.path[0]] = item.message;
-    return errors;
-  };
-
   render() {
+    const validate = () => {
+      // joi terminates as soon as it finds and error so we disble it
+      const options = { abortEarly: false };
+      const { error } = Joi.validate(this.state.account, this.schema, options);
+
+      if (!error) return null;
+      const errors = {};
+      // mapping array into object
+      for (let item of error.details) errors[item.path[0]] = item.message;
+      return errors;
+    };
+
     const handleSubmit = (event) => {
       // prevents default behavrior
       event.preventDefault();
 
-      const errors = this.validate();
+      const errors = validate();
       this.setState({
         errors: errors || {},
       });
@@ -39,13 +41,14 @@ class LogInForm extends Component {
     };
 
     const validateProperty = ({ name, value }) => {
-      if (name === "username") {
-        if (value.trim() === "") return "Username is required";
-      }
+      // dynamically get name property
+      // we dont want to abort early since it would be bad user experience
+      // if they a bunch of invalid fields. one at a time
+      const obj = { [name]: value };
+      const schema = { [name]: this.schema[name] };
+      const { error } = Joi.validate(obj, schema);
 
-      if (name === "password") {
-        if (value.trim() === "") return "Password is required";
-      }
+      return error ? error.details[0].message : null;
     };
 
     const handleChange = ({ currentTarget: input }) => {
