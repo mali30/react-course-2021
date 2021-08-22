@@ -5,7 +5,10 @@ import { paginate } from "../utils/paginate";
 import ListGroup from "../components/listGroup";
 import { getGenres } from "../services/fakeGenreService";
 import MoviesTable from "../components/moviesTable";
+import Navbar from '../components/common/navbar'
 import _ from "lodash";
+
+
 
 class Movies extends Component {
   state = {
@@ -96,6 +99,7 @@ class Movies extends Component {
   };
 
   render() {
+
     const { length: count } = this.state.movies;
     const {
       pageSize,
@@ -111,6 +115,7 @@ class Movies extends Component {
     const {totalCount, data: movies} = this.getPagedData();
 
     return (
+      <div>
       <div className="row">
         <div className="col-3">
           <ListGroup
@@ -135,7 +140,9 @@ class Movies extends Component {
             currentPage={currentPage}
           />
         </div>
-      </div>
+        </div>
+        </div>
+
     );
   }
 }
