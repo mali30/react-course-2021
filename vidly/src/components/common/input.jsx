@@ -1,20 +1,21 @@
 import React from "react";
 
-const Input = ({ name, label, value, onChange, error }) => {
+const Input = ({ name, label, error, ...rest }) => {
+  // since we have get the value from the props and then add it in the input in the format a = a,
+  // instead we grab what we must need and use spread operator to get the rest of data
   return (
     <div className="form-group">
       <label htmlFor={name}>{label}</label>
-      {/* values comes from state */}
       <input
-        value={value}
-        onChange={onChange}
+    //{/* using rest and spread operators to get other values and set. a = a *///}
+        {...rest}
+        name={name}
         autoFocus
         id={name}
-        name={name}
-        type="text"
         className="form-control"
-          />
-{ error &&  <div className="alert alert-danger">{error}</div> }    </div>
+      />
+      {error && <div className="alert alert-danger">{error}</div>}
+    </div>
   );
 };
 
