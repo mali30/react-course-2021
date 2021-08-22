@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Redirect, Switch } from "react-router-dom";
+import { Route, Redirect, Switch, BrowserRouter as Router } from "react-router-dom";
 
 import Movies from "./components/movies";
 import NotFound from "./components/notFound";
@@ -17,7 +17,9 @@ class App extends Component {
       <React.Fragment>
         <Navbar />
         <main className="container">
+          <Router>
           <Switch>
+            <Route path="/movies/new" component={MovieForm} />
             <Route path="/register" component={RegisterForm} />
             <Route path="/login" component={LogInForm} />
             <Route path="/movies/:id" component={MovieForm} />
@@ -28,6 +30,7 @@ class App extends Component {
             <Redirect from="/" exact to="/movies" />
             <Redirect to="/not-found" />
           </Switch>
+         </Router>
         </main>
       </React.Fragment>
     );
