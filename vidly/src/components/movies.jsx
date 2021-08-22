@@ -5,10 +5,8 @@ import { paginate } from "../utils/paginate";
 import ListGroup from "../components/listGroup";
 import { getGenres } from "../services/fakeGenreService";
 import MoviesTable from "../components/moviesTable";
-import Navbar from '../components/common/navbar'
+import { Link } from "react-router-dom";
 import _ from "lodash";
-
-
 
 class Movies extends Component {
   state = {
@@ -99,7 +97,6 @@ class Movies extends Component {
   };
 
   render() {
-
     const { length: count } = this.state.movies;
     const {
       pageSize,
@@ -112,37 +109,45 @@ class Movies extends Component {
       return <h2>No movies in stock</h2>;
     }
 
-    const {totalCount, data: movies} = this.getPagedData();
+    const { totalCount, data: movies } = this.getPagedData();
 
     return (
       <div>
-      <div className="row">
-        <div className="col-3">
-          <ListGroup
-            items={genres}
-            onItemSelect={this.handleGenreSelect}
-            selectedItem={selectedGenre}
-          />
+        <div className="row">
+          <div className="col-3">
+            <ListGroup
+              items={genres}
+              onItemSelect={this.handleGenreSelect}
+              selectedItem={selectedGenre}
+            />
+          </div>
+          <div className="col">
+            <div>
+              <Link
+                className="btn btn-primary"
+                style={{ marginBottom: 20 }}
+                to="/movies/new"
+              >
+                New Movie
+              </Link>
+            </div>
+            <h2>Showing {totalCount} movies in stock</h2>
+            <MoviesTable
+              movies={movies}
+              onLike={this.onLike}
+              onDelete={this.onDelete}
+              onSort={this.handleSort}
+              sortColumn={sortColumn}
+            />
+            <Pagination
+              itemCount={totalCount}
+              pageSize={pageSize}
+              onPageChange={this.handlePageChange}
+              currentPage={currentPage}
+            />
+          </div>
         </div>
-        <div className="col">
-          <h2>Showing {totalCount} movies in stock</h2>
-          <MoviesTable
-            movies={movies}
-            onLike={this.onLike}
-            onDelete={this.onDelete}
-            onSort={this.handleSort}
-            sortColumn={sortColumn}
-          />
-          <Pagination
-            itemCount={totalCount}
-            pageSize={pageSize}
-            onPageChange={this.handlePageChange}
-            currentPage={currentPage}
-          />
-        </div>
-        </div>
-        </div>
-
+      </div>
     );
   }
 }
